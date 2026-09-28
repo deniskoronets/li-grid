@@ -5,7 +5,7 @@ const props = defineProps<{
     translation: GridTranslation,
 }>();
 
-const model = defineModel();
+const model = defineModel<any>();
 
 if (model.value == '') {
     model.value = {from: '', to: ''};

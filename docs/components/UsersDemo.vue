@@ -34,6 +34,7 @@ const config = reactive<GridConfig>({
     defaultSort: {column: "id", order: "ASC"},
     columnsToggle: true,
     gridKey: "docs-demo",
+    mobileLayout: "stack",
     dataLoader: (filters, sort, page) => wrapObjectArrayWithGrid(filters, sort, page, users),
 });
 
@@ -47,11 +48,14 @@ const greet = (row: any) => alert(`Hello, ${row.name}!`);
 
 <template>
     <ClientOnly>
+        <!-- vp-raw opts out of VitePress content styles (tables, lists), like any host page CSS -->
+        <div class="vp-raw">
         <li-grid :config="config">
             <template #actions="{ row }">
                 <button class="demo-button" @click="greet(row)">Say hi</button>
             </template>
         </li-grid>
+        </div>
     </ClientOnly>
 </template>
 

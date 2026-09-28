@@ -36,6 +36,7 @@ interface GridConfig {
     columnsToggle?: boolean;  // show the "Columns" dropdown
     gridKey?: string;         // localStorage key for hidden columns
     theme?: 'light' | 'dark' | 'auto'; // default 'light'
+    mobileLayout?: 'scroll' | 'stack'; // default 'scroll'
 }
 ```
 

@@ -1,6 +1,6 @@
 # Live demo
 
-1,250 generated users, filtered, sorted and paginated in the browser with `wrapObjectArrayWithGrid`. Try adding filters, sorting by a column, hiding columns and scrolling sideways on a narrow screen.
+1,250 generated users, filtered, sorted and paginated in the browser with `wrapObjectArrayWithGrid`. Try adding filters, sorting by a column and hiding columns. On a phone (or a narrow browser window) rows turn into cards.
 
 <UsersDemo />
 
@@ -32,6 +32,7 @@ const config: GridConfig = {
     defaultSort: {column: "id", order: "ASC"},
     columnsToggle: true,
     gridKey: "docs-demo",
+    mobileLayout: "stack",
     dataLoader: (filters, sort, page) => wrapObjectArrayWithGrid(filters, sort, page, users),
 };
 

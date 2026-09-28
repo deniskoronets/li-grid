@@ -15,6 +15,7 @@ Lightweight **Vue 3** data grid with server-side filtering, sorting, pagination,
 - Sortable columns and pagination
 - Users can hide columns, and the choice is saved in localStorage
 - Light, dark and auto (OS-following) themes, customizable via CSS variables
+- Responsive: fits its container, with optional card layout on narrow screens
 - Sticky first/last columns
 - Custom cell and header slots
 - English and Ukrainian built in, or bring your own translation

@@ -225,6 +225,18 @@ describe("LiGrid", () => {
         expect(wrapper.classes()).toContain(`li-grid--${theme}`);
     });
 
+    it("adds the stack class only when mobileLayout is 'stack'", async () => {
+        expect((await mountGrid(makeConfig())).classes()).not.toContain("li-grid--stack");
+        expect((await mountGrid(makeConfig({mobileLayout: "stack"}))).classes()).toContain("li-grid--stack");
+    });
+
+    it("labels every data cell with its column for the stacked layout", async () => {
+        const wrapper = await mountGrid(makeConfig());
+
+        expect(wrapper.findAll("tbody tr")[0].findAll("td").map(td => td.attributes("data-label")))
+            .toEqual(["ID", "Name", "Amount"]);
+    });
+
     it("uses a built-in translation", async () => {
         const wrapper = await mountGrid(makeConfig(), {translation: "uk"});
 

@@ -39,7 +39,7 @@ export interface GridColumn {
     width?: string,
 
     // Can be either value or slotName
-    value?: string | ((row: string) => string);
+    value?: string | ((row: any) => string);
     slotName?: string;
 
     // Only takes effect when the column ends up first or last among the visible columns
@@ -61,6 +61,10 @@ export interface GridConfig {
 
     // Color theme. 'auto' follows the OS preference (prefers-color-scheme). Defaults to 'light'.
     theme?: 'light' | 'dark' | 'auto',
+
+    // Layout on narrow screens (<= 640px): 'scroll' keeps the table and scrolls it sideways,
+    // 'stack' shows every row as a card with "label: value" lines. Defaults to 'scroll'.
+    mobileLayout?: 'scroll' | 'stack',
 }
 
 export type GridTranslation = typeof liGridEnTranslation;

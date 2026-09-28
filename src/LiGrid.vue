@@ -178,7 +178,7 @@ defineExpose({
 </script>
 
 <template>
-    <div :class="['li-grid', `li-grid--${config.theme ?? 'light'}`]">
+    <div :class="['li-grid', `li-grid--${config.theme ?? 'light'}`, {'li-grid--stack': config.mobileLayout === 'stack'}]">
         <div class="li-grid__filters">
             <filter-edit></filter-edit>
             {{ translation.filters }}
@@ -207,7 +207,7 @@ defineExpose({
                 <reload></reload>
             </button>
             <p v-if="gridData && gridData.pagination">
-                {{ translation.total }} <b>{{ parseFloat(gridData.pagination.rowsTotalAmount).toLocaleString('en-US') }}</b>
+                {{ translation.total }} <b>{{ Number(gridData.pagination.rowsTotalAmount).toLocaleString('en-US') }}</b>
                 {{ translation.rowsFound }}, <b>{{ gridData.pagination.perPageRowsAmount }}</b> {{ translation.perPage }}.
             </p>
             <button v-if="config.columnsToggle" class="li-grid__add-filter li-grid__dropdown li-grid__columns-toggle">
@@ -268,6 +268,7 @@ defineExpose({
                     <tr v-for="(row, rowIndex) in (gridData ? gridData.rows : [])" :key="rowIndex">
                         <td v-for="(column, index) in visibleColumns"
                             :key="index"
+                            :data-label="column.label"
                             :class="{'align-left': !column.contentAlign || column.contentAlign == 'left', 'align-center': column.contentAlign == 'center', 'align-right': column.contentAlign == 'right', ...stickyClass(column, index)}"
                             :style="column.width ? {'min-width': column.width} : {}">
                             <template v-if="column.slotName">
