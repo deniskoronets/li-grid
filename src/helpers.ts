@@ -1,6 +1,6 @@
 import {GridData, GridFilter, GridSort} from "./types";
 
-export function wrapObjectArrayWithGrid(filters: GridFilter[], sort: GridSort | null, page: number, objectArray: object[]) {
+export function wrapObjectArrayWithGrid(filters: GridFilter[], sort: GridSort | null, page: number, objectArray: object[], perPage = 300) {
     let data = objectArray.filter((row) => {
         return filters.every((filter: GridFilter) => {
             if (filter.value === null || filter.value === undefined) return true; // skip empty filters
@@ -72,7 +72,9 @@ export function wrapObjectArrayWithGrid(filters: GridFilter[], sort: GridSort | 
     }
 
     // --- Pagination ---
-    const perPage = 300;
+    if (!Number.isInteger(perPage) || perPage < 1) {
+        throw new Error('perPage must be a positive integer, got: ' + perPage);
+    }
     const rowsTotalAmount = data.length;
     const pagesTotalAmount = Math.max(1, Math.ceil(rowsTotalAmount / perPage));
 

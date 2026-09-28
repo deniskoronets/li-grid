@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {GridColumn, GridConfig, GridData, GridFilter, GridSort, GridTranslation} from "./types";
 import {computed, onMounted, ref} from "vue";
-import {formatters} from "./formatters";
+import {resolveColumnValue} from "./formatters";
 import CaretDown from "./icons/caret-down.vue";
 import CaretUp from "./icons/caret-up.vue";
 import FilterEdit from "./icons/filter-edit.vue";
@@ -121,14 +121,6 @@ const goToPage = (page: number) => {
     loadData();
 };
 
-
-const applyFormatters = (column: GridColumn, value: any) => {
-    if (!column.formatter) {
-        return value;
-    }
-
-    return formatters[column.formatter](value);
-};
 
 const addFilter = (filter: GridFilter) => {
     selectedFilters.value.push({...filter, value: ''});
@@ -271,17 +263,8 @@ defineExpose({
                             :data-label="column.label"
                             :class="{'align-left': !column.contentAlign || column.contentAlign == 'left', 'align-center': column.contentAlign == 'center', 'align-right': column.contentAlign == 'right', ...stickyClass(column, index)}"
                             :style="column.width ? {'min-width': column.width} : {}">
-                            <template v-if="column.slotName">
-                                <slot :name="column.slotName" :row="row"></slot>
-                            </template>
-                            <template v-if="column.value">
-                                <template v-if="typeof column.value == 'string'">
-                                    {{ row[column.value] !== null ? applyFormatters(column, row[column.value]) : 'n/a' }}
-                                </template>
-                                <template v-else>
-                                    {{ column.value(row) }}
-                                </template>
-                            </template>
+                            <slot v-if="column.slotName" :name="column.slotName" :row="row"></slot>
+                            <span v-else-if="column.value" v-html="resolveColumnValue(column, row)"></span>
                         </td>
                     </tr>
                 </template>

@@ -1,9 +1,16 @@
+// Registered so it can be transitioned: rows and their sticky cells animate the hover color in sync
+@property --li-grid-row-current {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: transparent;
+}
+
 @mixin light-theme {
     --li-grid-bg: #fff;
     --li-grid-header-text: #3a4752;
     --li-grid-border: #f1f1f4;
     --li-grid-row-hover: #f1f1f4;
-    --li-grid-row-stripe: transparent; // e.g. #fafafc to enable zebra rows
+    --li-grid-row-stripe: transparent; // e.g. #fafafc to enable zebra (odd) rows
     --li-grid-sticky-shadow: rgba(0, 0, 0, 0.15);
 
     --li-grid-button-bg: #FAFBFC;
@@ -32,7 +39,7 @@
     --li-grid-header-text: #f0f0f3;
     --li-grid-border: #2e2e35;
     --li-grid-row-hover: #26262c;
-    --li-grid-row-stripe: transparent; // e.g. #202126 to enable zebra rows
+    --li-grid-row-stripe: transparent; // e.g. #202126 to enable zebra (odd) rows
     --li-grid-sticky-shadow: rgba(0, 0, 0, 0.5);
 
     --li-grid-button-bg: #26262c;
@@ -302,17 +309,22 @@ $li-grid-compact-width: 640px;
         border-collapse: separate;
         border-spacing: 0;
 
-        // Each body row exposes its current color (stripe / hover) so sticky cells can repaint it
-        tbody tr {
+        // Each body row exposes its current color (stripe / hover) so sticky cells can repaint it.
+        // Prefixed with .li-grid to outrank site-wide stripe rules like `.content tr:nth-child(2n)`,
+        // which would color the normal cells but not the sticky ones.
+        .li-grid & tbody tr {
             --li-grid-row-current: transparent;
             background: var(--li-grid-row-current);
+            // Animate the variable, not background-color: sticky cells paint it as a gradient layer,
+            // which can't be transitioned on its own
+            transition: --li-grid-row-current var(--li-grid-hover-duration, 0.15s);
         }
 
-        tbody tr:nth-child(even) {
+        .li-grid & tbody tr:nth-child(odd) {
             --li-grid-row-current: var(--li-grid-row-stripe);
         }
 
-        tbody tr:hover {
+        .li-grid & tbody tr:hover {
             --li-grid-row-current: var(--li-grid-row-hover);
         }
 
@@ -343,6 +355,16 @@ $li-grid-compact-width: 640px;
 
         th:first-child, td:first-child {
             border-left: 1px solid var(--li-grid-border);
+        }
+
+        // GridFormatter.image
+        .li-grid__image {
+            display: inline-block;
+            width: var(--li-grid-image-size, 40px);
+            height: var(--li-grid-image-size, 40px);
+            object-fit: cover;
+            border-radius: 4px;
+            vertical-align: middle;
         }
 
         td.align-left {

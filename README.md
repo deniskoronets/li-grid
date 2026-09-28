@@ -8,6 +8,8 @@ Lightweight **Vue 3** data grid with server-side filtering, sorting, pagination,
 
 📖 **[Documentation](https://deniskoronets.github.io/li-grid/)** · 🎮 **[Live demo](https://deniskoronets.github.io/li-grid/demo)**
 
+[![LiGrid demo: users table with avatars, role badges, status indicators, links, tags and action buttons](https://raw.githubusercontent.com/deniskoronets/li-grid/main/demo.png)](https://deniskoronets.github.io/li-grid/demo)
+
 ## Features
 
 - One async `dataLoader` works with any backend
@@ -96,6 +98,12 @@ npm run docs:dev   # run the docs site locally
 ## Author
 
 Created and maintained by **[Denys Koronets](https://github.com/deniskoronets/)**.
+
+## Have a project? Hire me!
+
+Need a custom data grid, a Vue 3 app, or help integrating LiGrid into your product? I'm open to freelance and contract work.
+
+👉 Get in touch via **[GitHub](https://github.com/deniskoronets/)**.
 
 ## License
 

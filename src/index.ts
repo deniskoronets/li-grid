@@ -13,7 +13,8 @@ export type {
     GridTranslation,
 } from "./types";
 
-export {GridFormatter, formatters} from "./formatters";
+export {GridFormatter} from "./types";
+export {formatters, escapeHtml, resolveColumnValue} from "./formatters";
 export {wrapObjectArrayWithGrid} from "./helpers";
 export {resolveTranslation} from "./translations";
 export {liGridEnTranslation} from "./translations/en";

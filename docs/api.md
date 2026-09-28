@@ -40,7 +40,7 @@ interface GridConfig {
 }
 ```
 
-See [Columns](./guide/columns) and [Filters](./guide/filters) for `GridColumn` and `GridFilter`.
+Each option is described in detail, with defaults and examples, in the **[GridConfig reference](./config)**.
 
 ## `GridSort`
 
@@ -75,6 +75,8 @@ import {
     wrapObjectArrayWithGrid, // client-side filter/sort/paginate helper
     GridFormatter,           // column formatters enum
     formatters,
+    resolveColumnValue,      // HTML of a cell for a column + row (escaped)
+    escapeHtml,
     resolveTranslation,
     liGridEnTranslation,
     liGridUkTranslation,

@@ -106,7 +106,7 @@ All colors are CSS variables on `.li-grid`. Override any of them for your brand:
 
 ### Zebra rows
 
-Use the variable rather than your own `tr:nth-child(even)` rule, so sticky columns get the stripe color too:
+Odd rows (1st, 3rd, …) get the stripe. Set it with the variable rather than your own `tr { background }` rule, so sticky columns get the stripe color too:
 
 ```css
 .li-grid {
@@ -118,6 +118,22 @@ Use the variable rather than your own `tr:nth-child(even)` rule, so sticky colum
 }
 ```
 
+To stripe other rows (e.g. even ones, or every 3rd), set the row's color variable instead of `background`. Keep `:not(:hover)` so hover still works:
+
+```css
+.li-grid .li-grid__table tbody tr:nth-child(odd):not(:hover) {
+    --li-grid-row-current: transparent;
+}
+
+.li-grid .li-grid__table tbody tr:nth-child(even):not(:hover) {
+    --li-grid-row-current: #fafafc;
+}
+```
+
+::: warning
+A plain `tr { background: … }` rule colors the normal cells only. Sticky cells paint their own opaque background (so scrolled content doesn't show through), and they only follow `--li-grid-row-current`.
+:::
+
 | Variable | Used for |
 |---|---|
 | `--li-grid-bg` | Sticky cell background |
@@ -125,12 +141,14 @@ Use the variable rather than your own `tr:nth-child(even)` rule, so sticky colum
 | `--li-grid-header-text` | Header text |
 | `--li-grid-border` | Table borders |
 | `--li-grid-row-hover` | Row hover background |
-| `--li-grid-row-stripe` | Background of even rows (zebra striping). `transparent` by default = off |
+| `--li-grid-row-stripe` | Background of odd rows (zebra striping). `transparent` by default = off |
+| `--li-grid-hover-duration` | Row hover fade, sticky columns included (default `0.15s`, `0s` to turn off) |
 | `--li-grid-sticky-shadow` | Shadow next to sticky columns |
 | `--li-grid-button-bg`, `--li-grid-button-hover-bg`, `--li-grid-button-active-bg` | Buttons and pagination |
 | `--li-grid-button-border`, `--li-grid-button-text`, `--li-grid-button-disabled-text` | Buttons and pagination |
 | `--li-grid-dropdown-bg`, `--li-grid-dropdown-border`, `--li-grid-dropdown-shadow` | Filter and column dropdowns |
 | `--li-grid-filter-separator` | Line left of each added filter |
+| `--li-grid-image-size` | Size of `GridFormatter.image` thumbnails (default `40px`) |
 | `--li-grid-input-bg`, `--li-grid-input-text`, `--li-grid-input-border`, `--li-grid-input-focus` | Filter inputs |
 
 ## CSS classes

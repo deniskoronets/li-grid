@@ -1,5 +1,11 @@
-import {GridFormatter} from "./formatters";
 import {liGridEnTranslation} from "./translations/en";
+
+export enum GridFormatter {
+    // 1234567 -> "1,234,567"
+    number = 'number',
+    // Value is an image URL, rendered as <img>
+    image = 'image',
+}
 
 export interface GridFilter {
     label: string,

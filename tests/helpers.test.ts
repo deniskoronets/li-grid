@@ -120,6 +120,24 @@ describe("wrapObjectArrayWithGrid", () => {
         expect(tooLow.pagination?.currentPage).toBe(1);
     });
 
+    it("uses a custom perPage", async () => {
+        const many = Array.from({length: 45}, (_, i) => ({id: i + 1}));
+
+        const page3 = await wrapObjectArrayWithGrid([], null, 3, many, 20);
+        expect(page3.rows.map((r: any) => r.id)).toEqual([41, 42, 43, 44, 45]);
+        expect(page3.pagination).toEqual({
+            currentPage: 3,
+            pagesTotalAmount: 3,
+            rowsTotalAmount: 45,
+            perPageRowsAmount: 20,
+        });
+    });
+
+    it("rejects an invalid perPage", () => {
+        expect(() => wrapObjectArrayWithGrid([], null, 1, rows, 0)).toThrow("perPage must be a positive integer");
+        expect(() => wrapObjectArrayWithGrid([], null, 1, rows, 2.5)).toThrow("perPage must be a positive integer");
+    });
+
     it("reports one page for empty data", async () => {
         const result = await wrapObjectArrayWithGrid([], null, 1, []);
 

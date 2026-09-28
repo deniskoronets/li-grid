@@ -21,6 +21,8 @@ export default defineConfig({
     themeConfig: {
         nav: [
             {text: "Guide", link: "/guide/getting-started"},
+            {text: "GridConfig", link: "/config"},
+            {text: "Recipes", link: "/recipes/"},
             {text: "API", link: "/api"},
             {text: "Demo", link: "/demo"},
             {text: "npm", link: "https://www.npmjs.com/package/li-grid"},
@@ -39,8 +41,36 @@ export default defineConfig({
                 ],
             },
             {
+                text: "Recipes",
+                link: "/recipes/",
+                items: [
+                    {text: "API backend", link: "/recipes/api-backend"},
+                    {text: "In-memory data", link: "/recipes/client-side"},
+                    {text: "Row actions", link: "/recipes/row-actions"},
+                    {text: "Custom cells", link: "/recipes/custom-cells"},
+                    {text: "Dark mode toggle", link: "/recipes/dark-mode"},
+                    {text: "Auto refresh", link: "/recipes/auto-refresh"},
+                    {text: "Custom look", link: "/recipes/custom-look"},
+                ],
+            },
+            {
                 text: "Reference",
                 items: [
+                    {
+                        text: "GridConfig",
+                        link: "/config",
+                        collapsed: false,
+                        items: [
+                            {text: "columns", link: "/config#columns"},
+                            {text: "filters", link: "/config#filters"},
+                            {text: "dataLoader", link: "/config#dataloader"},
+                            {text: "defaultSort", link: "/config#defaultsort"},
+                            {text: "columnsToggle", link: "/config#columnstoggle"},
+                            {text: "gridKey", link: "/config#gridkey"},
+                            {text: "theme", link: "/config#theme"},
+                            {text: "mobileLayout", link: "/config#mobilelayout"},
+                        ],
+                    },
                     {text: "API", link: "/api"},
                     {text: "Live demo", link: "/demo"},
                 ],

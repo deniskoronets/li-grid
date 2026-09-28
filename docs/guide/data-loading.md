@@ -44,7 +44,7 @@ dataLoader: async () => ({rows: await fetchAllUsers()})
 
 ## Client-side data
 
-Already have the whole array in memory? Use `wrapObjectArrayWithGrid` to filter, sort and paginate it (300 rows per page):
+Already have the whole array in memory? Use `wrapObjectArrayWithGrid` to filter, sort and paginate it:
 
 ```ts
 import {wrapObjectArrayWithGrid} from "li-grid";
@@ -53,6 +53,12 @@ const config: GridConfig = {
     // ...
     dataLoader: (filters, sort, page) => wrapObjectArrayWithGrid(filters, sort, page, myRows),
 };
+```
+
+The 5th argument sets the page size (default `300`):
+
+```ts
+dataLoader: (filters, sort, page) => wrapObjectArrayWithGrid(filters, sort, page, myRows, 50),
 ```
 
 ## Reloading from outside

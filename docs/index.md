@@ -30,3 +30,30 @@ features:
   - title: Translations
     details: English and Ukrainian included, or pass your own translation object.
 ---
+
+<div class="home-screenshot">
+
+[![LiGrid demo: users table with avatars, role badges, status indicators, links, tags and action buttons](/demo.png)](/demo)
+
+</div>
+
+<style>
+.home-screenshot {
+    max-width: 1152px;
+    margin: 48px auto 0;
+    padding: 0 24px;
+    text-align: center;
+}
+
+.home-screenshot img {
+    display: inline-block;
+    border: 1px solid var(--vp-c-divider);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    transition: transform 0.2s;
+}
+
+.home-screenshot a:hover img {
+    transform: translateY(-2px);
+}
+</style>

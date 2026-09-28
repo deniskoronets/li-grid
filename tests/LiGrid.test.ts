@@ -2,8 +2,7 @@ import {afterEach, describe, expect, it, vi} from "vitest";
 import {flushPromises, mount} from "@vue/test-utils";
 import {h} from "vue";
 import LiGrid from "../src/LiGrid.vue";
-import {GridConfig, GridData} from "../src/types";
-import {GridFormatter} from "../src/formatters";
+import {GridConfig, GridData, GridFormatter} from "../src/types";
 
 const rows = [
     {id: 1, name: "Alice", amount: 1500},
@@ -62,6 +61,32 @@ describe("LiGrid", () => {
         expect(bodyRows[0].findAll("td").map(td => td.text())).toEqual(["1", "Alice", "1,500"]);
         expect(bodyRows[1].findAll("td")[2].text()).toBe("n/a");
         expect(bodyRows[0].findAll("td")[2].classes()).toContain("align-right");
+    });
+
+    it("renders image formatter values as <img>, and n/a for null", async () => {
+        const wrapper = await mountGrid(makeConfig({
+            columns: [{label: "Photo", value: "photo", formatter: GridFormatter.image}],
+            dataLoader: vi.fn().mockResolvedValue({rows: [{photo: "https://picsum.photos/100/100"}, {photo: null}]}),
+        }));
+
+        const cells = wrapper.findAll("tbody td");
+        const img = cells[0].find("img");
+        expect(img.attributes("src")).toBe("https://picsum.photos/100/100");
+        expect(img.classes()).toContain("li-grid__image");
+        expect(img.attributes("alt")).toBe("Photo");
+        expect(cells[1].find("img").exists()).toBe(false);
+        expect(cells[1].text()).toBe("n/a");
+    });
+
+    it("shows HTML in data as text, not markup", async () => {
+        const wrapper = await mountGrid(makeConfig({
+            columns: [{label: "Name", value: "name"}],
+            dataLoader: vi.fn().mockResolvedValue({rows: [{name: "<img src=x onerror=alert(1)>"}]}),
+        }));
+
+        const cell = wrapper.find("tbody td");
+        expect(cell.find("img").exists()).toBe(false);
+        expect(cell.text()).toBe("<img src=x onerror=alert(1)>");
     });
 
     it("renders function column values", async () => {
