@@ -1,0 +1,351 @@
+@mixin light-theme {
+    --li-grid-bg: #fff;
+    --li-grid-header-text: #3a4752;
+    --li-grid-border: #f1f1f4;
+    --li-grid-row-hover: #f1f1f4;
+    --li-grid-sticky-shadow: rgba(0, 0, 0, 0.15);
+
+    --li-grid-button-bg: #FAFBFC;
+    --li-grid-button-hover-bg: #F3F4F6;
+    --li-grid-button-active-bg: #EDEFF2;
+    --li-grid-button-border: rgba(27, 31, 35, 0.15);
+    --li-grid-button-text: #24292E;
+    --li-grid-button-disabled-text: #959DA5;
+
+    --li-grid-dropdown-bg: #fafafa;
+    --li-grid-dropdown-border: #f9f9f9;
+    --li-grid-dropdown-shadow: rgba(0, 0, 0, 0.2);
+
+    --li-grid-filter-separator: #ccc;
+    --li-grid-input-bg: #fff;
+    --li-grid-input-text: #212529;
+    --li-grid-input-border: #ced4da;
+    --li-grid-input-focus: #ccc;
+
+    color-scheme: light;
+}
+
+@mixin dark-theme {
+    --li-grid-bg: #1b1b1f;
+    --li-grid-text: #dfdfd6;
+    --li-grid-header-text: #f0f0f3;
+    --li-grid-border: #2e2e35;
+    --li-grid-row-hover: #26262c;
+    --li-grid-sticky-shadow: rgba(0, 0, 0, 0.5);
+
+    --li-grid-button-bg: #26262c;
+    --li-grid-button-hover-bg: #2e2e35;
+    --li-grid-button-active-bg: #36363e;
+    --li-grid-button-border: rgba(255, 255, 255, 0.12);
+    --li-grid-button-text: #dfdfd6;
+    --li-grid-button-disabled-text: #6b6b75;
+
+    --li-grid-dropdown-bg: #202127;
+    --li-grid-dropdown-border: #2e2e35;
+    --li-grid-dropdown-shadow: rgba(0, 0, 0, 0.6);
+
+    --li-grid-filter-separator: #3c3c44;
+    --li-grid-input-bg: #1b1b1f;
+    --li-grid-input-text: #dfdfd6;
+    --li-grid-input-border: #3c3c44;
+    --li-grid-input-focus: #5c5c66;
+
+    color-scheme: dark;
+    color: var(--li-grid-text);
+}
+
+.li-grid {
+    @include light-theme;
+
+    &--dark {
+        @include dark-theme;
+    }
+
+    &--auto {
+        @media (prefers-color-scheme: dark) {
+            @include dark-theme;
+        }
+    }
+
+    &__responsive-table {
+        overflow-x: auto;
+    }
+
+    &__table {
+        width: auto;
+        min-width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        tr:hover {
+            background: var(--li-grid-row-hover);
+        }
+
+        th {
+            color: var(--li-grid-header-text);
+            font-weight: bold;
+            padding: 14px 9px;
+            border-top: 1px solid var(--li-grid-border);
+        }
+
+        th, td {
+            border-bottom: 1px solid var(--li-grid-border);
+            border-right: 1px solid var(--li-grid-border);
+            padding: 14px 9px;
+        }
+
+        th:first-child, td:first-child {
+            border-left: 1px solid var(--li-grid-border);
+        }
+
+        td.align-left {
+            text-align: left;
+        }
+
+        td.align-center {
+            text-align: center;
+        }
+
+        td.align-right {
+            text-align: right;
+        }
+
+        th.li-grid__sticky-left, td.li-grid__sticky-left,
+        th.li-grid__sticky-right, td.li-grid__sticky-right {
+            position: sticky;
+            z-index: 1;
+            background: var(--li-grid-bg);
+        }
+
+        th.li-grid__sticky-left, th.li-grid__sticky-right {
+            z-index: 2;
+        }
+
+        .li-grid__sticky-left {
+            left: 0;
+            box-shadow: 2px 0 4px -2px var(--li-grid-sticky-shadow);
+        }
+
+        .li-grid__sticky-right {
+            right: 0;
+            box-shadow: -2px 0 4px -2px var(--li-grid-sticky-shadow);
+        }
+
+        tr:hover td.li-grid__sticky-left, tr:hover td.li-grid__sticky-right {
+            background: var(--li-grid-row-hover);
+        }
+    }
+
+    &__filters {
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+
+        & > p {
+            margin: 0;
+        }
+    }
+
+    &__add-filter {
+        appearance: none;
+        background-color: var(--li-grid-button-bg);
+        border: 1px solid var(--li-grid-button-border);
+        border-radius: 6px;
+        box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+        box-sizing: border-box;
+        color: var(--li-grid-button-text);
+        cursor: pointer;
+        display: inline-block;
+        font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        list-style: none;
+        padding: 6px 10px 6px 16px;
+        position: relative;
+        transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+        white-space: nowrap;
+        word-wrap: break-word;
+
+        &:hover {
+            background-color: var(--li-grid-button-hover-bg);
+            text-decoration: none;
+            transition-duration: 0.1s;
+        }
+
+        &:disabled {
+            background-color: var(--li-grid-button-bg);
+            border-color: var(--li-grid-button-border);
+            color: var(--li-grid-button-disabled-text);
+            cursor: default;
+        }
+
+        &:active {
+            background-color: var(--li-grid-button-active-bg);
+            box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+            transition: none 0s;
+        }
+
+        &:focus {
+            outline: 1px transparent;
+        }
+
+        &:before {
+            display: none;
+        }
+
+        &:-webkit-details-marker {
+            display: none;
+        }
+    }
+
+    &__dropdown {
+        position: relative;
+        display: inline-block;
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--li-grid-dropdown-bg);
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 var(--li-grid-dropdown-shadow);
+            padding: 12px 16px;
+            z-index: 3;
+            left: 0;
+            top: 37px;
+            text-align: left;
+
+            li {
+                padding: 0.5rem 0;
+                border-bottom: 1px solid var(--li-grid-dropdown-border);
+            }
+        }
+
+        &:hover .dropdown-content {
+            display: block;
+        }
+    }
+
+    &__columns-toggle {
+        margin-left: auto;
+
+        .li-grid__columns-list {
+            right: 0;
+            left: auto;
+
+            li {
+                white-space: nowrap;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                font-weight: normal;
+                margin: 0;
+            }
+        }
+    }
+
+    &__selected-filter {
+        border-left: 1px solid var(--li-grid-filter-separator);
+        padding-left: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+
+        input[type=text], input[type=number], input[type=date], select {
+            padding: 6px 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--li-grid-input-text);
+            background-color: var(--li-grid-input-bg);
+            background-clip: padding-box;
+            border: 1px solid var(--li-grid-input-border);
+            appearance: none;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+            &:focus, &:focus-visible {
+                color: var(--li-grid-input-text);
+                background-color: var(--li-grid-input-bg);
+                outline: 1px solid var(--li-grid-input-focus);
+            }
+        }
+
+        input[type=date] {
+            min-width: 125px;
+        }
+    }
+
+    &__selected-filter-remove {
+        cursor: pointer;
+    }
+
+    &__pagination {
+        margin-top: 1rem;
+        ul {
+            display: flex;
+            gap: 0.5rem;
+
+            li {
+                min-width: 30px;
+                text-align: center;
+                appearance: none;
+                background-color: var(--li-grid-button-bg);
+                border: 1px solid var(--li-grid-button-border);
+                border-radius: 6px;
+                box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+                box-sizing: border-box;
+                color: var(--li-grid-button-text);
+                cursor: pointer;
+                display: inline-block;
+                font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+                font-size: 14px;
+                font-weight: 500;
+                line-height: 20px;
+                list-style: none;
+                padding: 6px 16px;
+                position: relative;
+                transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                vertical-align: middle;
+                white-space: nowrap;
+                word-wrap: break-word;
+
+                &:hover {
+                    background-color: var(--li-grid-button-hover-bg);
+                    text-decoration: none;
+                    transition-duration: 0.1s;
+                }
+
+                &:disabled {
+                    background-color: var(--li-grid-button-bg);
+                    border-color: var(--li-grid-button-border);
+                    color: var(--li-grid-button-disabled-text);
+                    cursor: default;
+                }
+
+                &:active, &.active {
+                    background-color: var(--li-grid-button-active-bg);
+                    box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+                    transition: none 0s;
+                }
+
+                &.empty {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
